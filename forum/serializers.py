@@ -73,5 +73,5 @@ class ForumSerializer(serializers.ModelSerializer):
     class Meta:
         model = Forum
         fields = (
-            'id', 'title', 'description', 'created')
+            'id', 'title', 'description', 'created', 'creator')
         read_only_fields = ('id', 'created')
