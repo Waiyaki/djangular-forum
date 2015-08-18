@@ -1,0 +1,11 @@
+__pycache__/
+*.sublime*
+*.sqlite3
+local_settings.py
+staticfiles
+*.py[co]
+.directory
+.idea
+.coverage
+htmlcov/
+profile_images/
