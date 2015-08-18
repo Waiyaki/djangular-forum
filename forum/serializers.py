@@ -9,7 +9,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserProfile
-        fields = ('user', 'posts', 'avatar')
+        fields = ('posts', 'avatar')
         read_only_fields = ('user', 'posts',)
 
 
@@ -22,16 +22,17 @@ class UserSerializer(serializers.ModelSerializer):
         read_only_fields = ('username',)
 
 
-class CommentSerializer(serializers.ModelSerializer):
-    post = serializers.PrimaryKeyRelatedField(read_only=True)
+class CommentSerializer(serializers.HyperlinkedModelSerializer):
+    post = serializers.HyperlinkedRelatedField(
+        queryset=Post.objects.all(), view_name="post-detail")
     creator = UserSerializer(required=False, read_only=True)
 
     class Meta:
         model = Comment
         fields = (
-            'id', 'title', 'body', 'post', 'created', 'creator'
+            'url', 'title', 'body', 'post', 'created', 'creator'
         )
-        read_only_fields = ('id', 'created', 'creator',)
+        read_only_fields = ('id', 'created', 'creator', 'post')
 
     def get_validation_exclusions(self, *args, **kwargs):
         exclusions = super(CommentSerializer, self).get_validation_exclusions()
@@ -40,38 +41,49 @@ class CommentSerializer(serializers.ModelSerializer):
 
 class PostSerializer(serializers.ModelSerializer):
     creator = UserSerializer(required=False, read_only=True)
-    thread = serializers.PrimaryKeyRelatedField(read_only=True)
+    thread = serializers.PrimaryKeyRelatedField(queryset=Thread.objects.all())
+    comments = CommentSerializer(many=True, read_only=True)
 
     class Meta:
         model = Post
-        fields = ('id', 'title', 'body', 'created', 'updated', 'creator')
+        fields = (
+            'id', 'title', 'body', 'created', 'updated', 'creator',
+            'comments', 'thread')
 
-        read_only_fields = ('id', 'created', 'updated')
+        read_only_fields = ('id', 'created', 'updated',)
 
     def get_validation_exclusions(self, *args, **kwargs):
         exclusions = super(PostSerializer, self).get_validation_exclusions()
         return exclusions + ['creator']
 
 
-class ThreadSerializer(serializers.ModelSerializer):
+class ThreadSerializer(serializers.HyperlinkedModelSerializer):
     creator = UserSerializer(read_only=True, required=False)
-    forum = serializers.PrimaryKeyRelatedField(read_only=True)
+    forum = serializers.HyperlinkedRelatedField(
+        queryset=Forum.objects.all(), view_name="forum-detail")
+    posts = serializers.HyperlinkedRelatedField(
+        many=True, view_name="post-detail", read_only=True)
 
     class Meta:
         model = Thread
-        fields = ('id', 'forum', 'title', 'description', 'created', 'creator')
-        read_only_fields = ('id', 'created')
+        fields = (
+            'url', 'forum', 'title', 'description', 'created',
+            'creator', 'posts', 'slug')
+        read_only_fields = ('id', 'created', 'slug')
 
     def get_validation_exclusions(self, *args, **kwargs):
         exclusions = super(ThreadSerializer, self).get_validation_exclusions()
         return exclusions + ['creator']
 
 
-class ForumSerializer(serializers.ModelSerializer):
+class ForumSerializer(serializers.HyperlinkedModelSerializer):
     creator = UserSerializer(read_only=True, required=False)
+    threads = serializers.HyperlinkedRelatedField(
+        many=True, view_name="thread-detail", read_only=True)
 
     class Meta:
         model = Forum
         fields = (
-            'id', 'title', 'description', 'created', 'creator')
-        read_only_fields = ('id', 'created')
+            'url', 'title', 'description', 'created',
+            'creator', 'threads', 'slug')
+        read_only_fields = ('id', 'created', 'slug')

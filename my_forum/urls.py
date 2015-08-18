@@ -15,15 +15,20 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 
-from rest_framework_nested import routers
+from rest_framework.routers import DefaultRouter
 
 from forum import views
 
-router = routers.SimpleRouter()
+router = DefaultRouter()
+
 router.register(r'forums', views.ForumViewSet)
+router.register(r'threads', views.ThreadViewSet)
+router.register(r'posts', views.PostViewSet)
+router.register(r'comments', views.CommentViewSet)
+
 
 urlpatterns = [
     url(r'^$', views.api_root),
-    url(r'^', include(router.urls)),
+    url(r'^api/v1/', include(router.urls)),
     url(r'api-auth/', include('rest_framework.urls', namespace="rest_framework")),
 ]
