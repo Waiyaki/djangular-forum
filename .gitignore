@@ -9,3 +9,4 @@ staticfiles
 .coverage
 htmlcov/
 profile_images/
+bower_components/
