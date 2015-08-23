@@ -1,12 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="forum">
 <head>
     <meta charset="utf-8">
     <title>Marioshoni Forum</title>
     {% include "stylesheets.html" %}
 </head>
-<body>
-    <h1>Yay!</h1>
+<body layout="row">
+    {% include "mdsidenav.html" %}
+    <section layout="column" flex>
+        {% include "mdtoobar.html" %}
+        <md-content layout="column" flex>
+            <div ng-view ng-cloak></div>
+        </md-content>
+    </section>    
 
     {% include "javascripts.html" %}
 </body>
