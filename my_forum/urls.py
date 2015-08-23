@@ -18,6 +18,7 @@ from django.conf.urls import include, url
 from rest_framework.routers import DefaultRouter
 
 from forum import views
+from .views import IndexView
 
 router = DefaultRouter()
 
@@ -31,4 +32,5 @@ urlpatterns = [
     url(r'^api/v1/$', views.api_root),
     url(r'^api/v1/', include(router.urls)),
     url(r'api-auth/', include('rest_framework.urls', namespace="rest_framework")),
+    url(r'^.*$', IndexView.as_view(), name='index'),
 ]
