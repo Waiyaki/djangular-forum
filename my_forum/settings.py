@@ -37,8 +37,14 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'compressor',
     'rest_framework',
+    'rest_framework.authtoken',
+    'rest_auth',
+    'allauth',
+    'allauth.account',
+    'rest_auth.registration',
     'django_extensions',
     'forum',
 )
@@ -73,7 +79,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'my_forum.wsgi.application'
-
+SITE_ID = 1
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
@@ -110,3 +116,5 @@ STATICFILES_DIRS = (
 )
 
 COMPRESS_ENABLED = os.environ.get('COMPRESS_ENABLED', False)
+
+ACCOUNT_EMAIL_VERIFICATION = 'none'

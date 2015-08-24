@@ -1,0 +1,7 @@
+.login-card, .register-card {
+    margin-top: 50px;
+}
+
+.validating {
+    color: #0082FF;
+}

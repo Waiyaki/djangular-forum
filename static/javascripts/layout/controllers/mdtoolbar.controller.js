@@ -2,7 +2,8 @@
     'use strict';
 
     angular.module('forum.layout.controllers')
-        .controller('ToolbarController', ['$mdSidenav', '$location', function($mdSidenav, $location){
+        .controller('ToolbarController', ['$mdSidenav', '$location', 'Authentication',
+                function($mdSidenav, $location, Authentication){
             var vm = this;
 
             vm.toggleSidenav = function(menuId){
@@ -10,8 +11,11 @@
             };
 
             vm.navigate = function(to){
-                console.log('Imagine navigation to ', to);
                 $location.url(to);
             };
+
+            vm.logout = function(){
+                Authentication.logout();
+            }
         }]);
 })();
