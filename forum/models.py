@@ -7,7 +7,7 @@ from django.template.defaultfilters import slugify
 
 
 class Forum(models.Model):
-    creator = models.ForeignKey(User, blank=True, null=True)
+    creator = models.ForeignKey(User)
 
     title = models.CharField(max_length=60)
     created = models.DateTimeField(default=timezone.now)
@@ -18,7 +18,7 @@ class Forum(models.Model):
         return sum([thread.num_posts() for thread in self.thread_set.all()])
 
     def num_threads(self):
-        return self.thread_set.count()
+        return self.threads.count()
 
     def last_post(self):
         if self.thread_set.count():
@@ -45,7 +45,7 @@ class Forum(models.Model):
 
 
 class Thread(models.Model):
-    creator = models.ForeignKey(User, blank=True, null=True)
+    creator = models.ForeignKey(User)
     forum = models.ForeignKey(Forum, related_name='threads')
 
     title = models.CharField(max_length=60)
@@ -54,7 +54,7 @@ class Thread(models.Model):
     slug = models.SlugField(unique=True)
 
     def __str__(self):
-        return str(self.creator) + " - " + self.title
+        return self.title
 
     def num_posts(self):
         return self.post_set.count()
@@ -73,7 +73,7 @@ class Thread(models.Model):
 
 
 class Post(models.Model):
-    creator = models.ForeignKey(User, blank=True, null=True)
+    creator = models.ForeignKey(User)
     thread = models.ForeignKey(Thread, related_name="posts")
 
     title = models.CharField(max_length=60)
@@ -82,11 +82,7 @@ class Post(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return "{} - {} - {}".format(self.creator, self.thread, self.title)
-
-    def short(self):
-        return "{} - {}".format(self.creator, self.title)
-    short.allow_tags = True
+        return self.title
 
 
 class Comment(models.Model):

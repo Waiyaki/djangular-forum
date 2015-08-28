@@ -16,24 +16,29 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 
-from rest_framework.routers import DefaultRouter
+from rest_framework_nested import routers
 
 from forum import views
 from .views import IndexView
 
-router = DefaultRouter()
+router = routers.SimpleRouter()
 
 router.register(r'forums', views.ForumViewSet)
-router.register(r'threads', views.ThreadViewSet)
-router.register(r'posts', views.PostViewSet)
-router.register(r'comments', views.CommentViewSet)
+# router.register(r'posts', views.PostViewSet)
+# router.register(r'comments', views.CommentViewSet)
 router.register(r'users', views.UserViewSet)
+
+forum_threads_router = routers.NestedSimpleRouter(router, r'forums', lookup="forum")
+forum_threads_router.register(r'threads', views.ForumThreadsViewSet, base_name="forum-thread")
 
 
 urlpatterns = [
     url(r'^admin', include(admin.site.urls)),
     url(r'^api/v1/$', views.api_root),
     url(r'^api/v1/', include(router.urls)),
+    url(r'^api/v1/', include(forum_threads_router.urls)),
+    url(r'^api/v1/threads/$', views.ThreadList.as_view(), name='thread-list'),
+    url(r'^api/v1/threads/(?P<slug>\w+)/$', views.ThreadDetails.as_view(), name='thread-detail'),
     url(r'^api/v1/rest-auth/', include('rest_auth.urls')),
     url(r'^api/v1/rest-auth/registration/', include('rest_auth.registration.urls')),
     url(r'api-auth/', include('rest_framework.urls', namespace="rest_framework")),

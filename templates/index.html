@@ -7,7 +7,9 @@
     {% include "stylesheets.html" %}
 </head>
 <body layout="row">
-    {% include "mdsidenav.html" %}
+    {% if user.is_authenticated %}
+        {% include "mdsidenav.html" %}
+    {% endif %}
     <section layout="column" flex>
         {% include "mdtoobar.html" %}
         <md-content layout="column" flex>

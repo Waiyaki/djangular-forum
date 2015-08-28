@@ -1,10 +1,10 @@
 <md-content layout="row" layout-align="space-around center">
     <md-card flex="66" flex-gt-md="50" class="login-card">
         <md-toolbar>
-            <h1 layout-align="center" class="md-toolbar-tools md-display-2">Login</h1>
+            <h1 layout-align="center" class="md-toolbar-tools">Login</h1>
         </md-toolbar>
         <md-card-content>
-            <form name="loginForm" ng-submit="vm.login()">
+            <form name="loginForm" ng-submit="vm.login()" novalidate>
                 <md-input-container>
                     <label>Username</label>
                     <input type="text" ng-model="vm.user.username" required name="username">
