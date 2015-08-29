@@ -5,3 +5,16 @@
 .validating {
     color: #0082FF;
 }
+
+.page-content {
+    padding-bottom: 15px;
+}
+
+.page-content-header {
+    margin-top: 15px;
+}
+
+.item-title:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}

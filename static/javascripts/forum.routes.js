@@ -13,6 +13,14 @@
                 controllerAs: 'vm',
                 templateUrl: '/static/templates/authentication/register.html'
             })
+            .when('/', {
+                controller: 'IndexController',
+                controllerAs: 'vm',
+                templateUrl: '/static/templates/layout/index.html'
+            })
+            .when('/forums/:forum_slug', {
+                template: '<h1>In here</h1>'
+            })
             .otherwise('/');
         }]);
 })();

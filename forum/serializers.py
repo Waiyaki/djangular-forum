@@ -5,8 +5,15 @@ from rest_framework import serializers
 from .models import Forum, Thread
 
 
+class UserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ('username', 'email')
+
+
 class ForumSerializer(serializers.HyperlinkedModelSerializer):
-    creator = serializers.ReadOnlyField(source='creator.username')
+    creator = UserSerializer(read_only=True)
     threads = serializers.SlugRelatedField(
         many=True, read_only=True, slug_field='slug')
     url = serializers.HyperlinkedIdentityField(
@@ -16,10 +23,10 @@ class ForumSerializer(serializers.HyperlinkedModelSerializer):
         model = Forum
         fields = (
             'url',
-            'title', 'description', 'created',
-            'slug', 'creator', 'threads', 'num_threads'
+            'title', 'description', 'slug', 'created', 'num_threads', 'threads',
+            'creator'
         )
-        read_only_fields = ('created', 'slug')
+        read_only_fields = ('created', 'slug', 'creator')
 
     def get_validation_exclusions(self, *args, **kwargs):
         exclusions = super(ForumSerializer, self).get_validation_exclusions()
@@ -35,24 +42,16 @@ class ForumSerializerNested(ForumSerializer):
 
 
 class ThreadSerializer(serializers.HyperlinkedModelSerializer):
-    creator = serializers.ReadOnlyField(source='creator.username')
+    creator = UserSerializer(read_only=True)
     forum = ForumSerializerNested(read_only=True)
 
     class Meta:
         model = Thread
         fields = (
-            'creator', 'title', 'description',
-            'created', 'slug', 'forum'
+            'title', 'description', 'slug', 'created', 'forum', 'creator'
         )
         read_only_fields = ('slug', 'created', 'forum')
 
     def get_validation_exclusions(self, *args, **kwargs):
         exclusions = super(ThreadSerializer, self).get_validation_exclusions()
         return exclusions + ['creator', 'forum']
-
-
-class UserSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = User
-        fields = ('username', 'email')

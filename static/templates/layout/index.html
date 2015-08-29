@@ -1,0 +1,31 @@
+<div ng-controller="IndexController as vm" layout="row" layout-align="space-around center" class="page-content" layout-padding ng-cloak>
+    <md-content flex-gt-md="85" flex-md="90">
+        <md-card>
+            <md-toolbar class="md-warn">
+                <div class="md-toolbar-tools">
+                    <h1 class="md-flex">List of available Forums</h1>
+                </div>
+            </md-toolbar>
+            <md-card-content>
+                <md-list>
+                    <div ng-repeat="forum in vm.forums">
+                        <md-list-item class="md-3-line" ng-click="vm.navigate(forum.slug)">
+                            <div class="md-list-item-text" layout="column">
+                                <h2 ng-bind="forum.title" class="md-headline item-title"></h2>
+                                <h4>{{ forum.description || 'No description yet.' }}</h4>
+                                <div class="md-caption">
+                                    <p>Threads: {{ forum.num_threads }}</p>
+                                    <p>Created: {{ forum.created | date }}</p>
+                                    <p>Created By: {{ forum.creator.username }}</p>
+                                </div>
+                            </div>
+                        </md-list-item>
+                        <div ng-hide="{{ $last }}">
+                            <md-divider></md-divider>
+                        </div>
+                    </div>
+                </md-list>
+            </md-card-content>
+        </md-card>
+    </md-content>
+</div>
