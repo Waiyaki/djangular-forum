@@ -18,7 +18,7 @@
                         <h1 class="md-flex">Posts</h1>
                     </div>
                 </md-toolbar>
-                <md-content ng-repeat="post in vm.posts" ng-if="vm.posts">
+                <md-content ng-repeat="post in vm.posts">
                     <div layout="column" class="md-padding">
                         <h2 ng-bind="post.title" class="md-headline item-title"></h2>
                         <div class="post-content">
@@ -33,8 +33,12 @@
                         <md-divider></md-divider>
                     </div>
                 </md-content>
+
                 <md-list ng-hide="vm.posts && vm.posts.length">
-                    <md-list-item class="md-2-line">
+                    <div layout="row" layout-sm="column" layout-align="space-around" ng-hide="vm.posts_loaded" class="md-padding">
+                        <md-progress-circular md-mode="indeterminate" class="md-warn"></md-progress-circular>
+                    </div>
+                    <md-list-item class="md-2-line" ng-show="vm.posts_loaded">
                         <div class="md-list-item-text" layout="column">
                             <h2 class="md-headline">No posts in this thread yet.</h2>
                         </div>

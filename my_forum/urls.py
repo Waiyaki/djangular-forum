@@ -37,9 +37,10 @@ urlpatterns = [
     url(r'^api/v1/', include(router.urls)),
     url(r'^api/v1/', include(forum_threads_router.urls)),
     url(r'^api/v1/threads/$', views.ThreadList.as_view(), name='thread-list'),
-    url(r'^api/v1/threads/(?P<slug>\w+)/$', views.ThreadDetails.as_view(), name='thread-detail'),
-    url(r'^api/v1/threads/(?P<thread_slug>\w+)/posts/$', views.ThreadPostsViewSet.as_view(
-        {'get': 'list'}), name="thread-posts"),
+    url(r'^api/v1/threads/(?P<slug>[\w\-]+)/$',
+        views.ThreadDetails.as_view(), name='thread-detail'),
+    url(r'^api/v1/threads/(?P<thread_slug>[\w\-]+)/posts/$',
+        views.ThreadPostsViewSet.as_view({'get': 'list'}), name="thread-posts"),
     url(r'^api/v1/rest-auth/', include('rest_auth.urls')),
     url(r'^api/v1/rest-auth/registration/', include('rest_auth.registration.urls')),
     url(r'api-auth/', include('rest_framework.urls', namespace="rest_framework")),

@@ -25,6 +25,16 @@
                         </div>
                     </div>
                 </md-list>
+                <md-list ng-hide="vm.forums && vm.forums.length">
+                    <div layout="row" layout-sm="column" layout-align="space-around" ng-hide="vm.forums_loaded" class="md-padding">
+                        <md-progress-circular md-mode="indeterminate" class="md-warn"></md-progress-circular>
+                    </div>
+                    <md-list-item class="md-2-line">
+                        <div class="md-list-item-text" layout="column" ng-show="vm.forums_loaded">
+                            <h2 class="md-headline">No forums yet.</h2>
+                        </div>
+                    </md-list-item>
+                </md-list>
             </md-card-content>
         </md-card>
     </md-content>
