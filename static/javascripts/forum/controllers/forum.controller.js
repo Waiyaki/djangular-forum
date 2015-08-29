@@ -12,7 +12,7 @@
 
             vm.navigate = function(slug) {
                 var url = '/threads/' + slug;
-                console.log('Imagine navigating to ', url);
+                $location.path(url);
             }
 
             function activate(){

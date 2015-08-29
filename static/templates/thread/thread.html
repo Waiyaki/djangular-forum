@@ -1,0 +1,46 @@
+<div layout="row" layout-align="space-around center" class="page-content" layout-padding ng-cloak>
+    <md-content flex-gt-md="85" flex-md="90">
+        <md-toolbar class="md-warn md-whiteframe-z2">
+            <div class="md-toolbar-tools">
+                <h1 class="md-flex"><span ng-bind="vm.thread.title"></span> Thread</h1>
+            </div>
+        </md-toolbar>
+        <div class="md-whiteframe-z1 md-padding" layout="column">
+            <h4 class="md-headline item-title">{{ vm.thread.description || 'No description yet.' }}</h4>
+            <div class="md-caption">
+                <p>Posts: {{ vm.thread.num_posts }}</p>
+                <p>Created: {{ vm.thread.created | date }}</p>
+                <p>Created By: {{ vm.thread.creator.username }}</p>
+            </div>
+            <md-content class="content-list" style="max-height: 600px;">
+                <md-toolbar class="md-accent">
+                    <div class="md-toolbar-tools">
+                        <h1 class="md-flex">Posts</h1>
+                    </div>
+                </md-toolbar>
+                <md-content ng-repeat="post in vm.posts" ng-if="vm.posts">
+                    <div layout="column" class="md-padding">
+                        <h2 ng-bind="post.title" class="md-headline item-title"></h2>
+                        <div class="post-content">
+                            <p ng-bind="post.body"></p>
+                        </div>
+                        <div class="md-caption text-muted">
+                            <p>Created: {{ post.created | date:'medium' }}</p>
+                            <p>Created By: {{ post.creator.username }}</p>
+                        </div>
+                    </div>
+                    <div ng-hide="{{ $last }}">
+                        <md-divider></md-divider>
+                    </div>
+                </md-content>
+                <md-list ng-hide="vm.posts && vm.posts.length">
+                    <md-list-item class="md-2-line">
+                        <div class="md-list-item-text" layout="column">
+                            <h2 class="md-headline">No posts in this thread yet.</h2>
+                        </div>
+                    </md-list-item>
+                </md-list>
+            </md-content>
+        </div>
+    </md-content>
+</div>

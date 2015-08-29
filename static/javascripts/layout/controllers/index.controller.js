@@ -11,14 +11,10 @@
                 $location.path('/forums/' + slug + '/')
             }
 
-            function activate(){
-                Forum.all().then(function(success){
-                    vm.forums = success.data;
-                }, function(error){
-                    $mdToast.showSimple('Error loading forums. Please try again later.');
-                });
-            }
-
-            activate();
+            Forum.all().then(function(success){
+                vm.forums = success.data;
+            }, function(error){
+                $mdToast.showSimple('Error loading forums. Please try again later.');
+            });
         }]);
 })();

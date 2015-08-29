@@ -7,14 +7,15 @@ from rest_framework.reverse import reverse
 from rest_framework import viewsets, permissions
 from rest_framework import generics, status
 
-from .models import Forum, Thread
-from .serializers import ForumSerializer, ThreadSerializer, UserSerializer
+from .models import Forum, Thread, Post
+from .serializers import (
+    ForumSerializer, ThreadSerializer, UserSerializer, PostSerializer
+)
 from .permissions import IsCreatorOrReadOnly, IsAdminUserOrReadOnly
 
 
 @api_view(('GET',))
 def api_root(request, format=None):
-
     """
     API for this forum application.
 
@@ -121,6 +122,20 @@ class ForumThreadsViewSet(viewsets.ViewSet):
         return Response(serializer.data)
 
 
+class ThreadPostsViewSet(viewsets.ViewSet):
+    queryset = Post.objects.select_related('thread').all()
+    serializer_class = PostSerializer
+    permission_classes = (
+        permissions.IsAuthenticatedOrReadOnly, IsCreatorOrReadOnly
+    )
+
+    def list(self, request, thread_slug, format=None):
+        queryset = self.queryset.filter(
+            thread__slug=thread_slug).order_by('-created')
+        serializer = self.serializer_class(queryset, many=True)
+        return Response(serializer.data)
+
+
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
     lookup_field = 'username'
     serializer_class = UserSerializer
@@ -135,4 +150,4 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
             User.objects.get(username=username)
             return Response({}, status=status.HTTP_200_OK)
         except User.DoesNotExist:
-            return Response({}, status=status.HTTP_404_NOT_FOUND)
+            return Response({}, status=status.HTTP_400_BAD_REQUEST)

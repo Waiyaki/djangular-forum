@@ -10,7 +10,8 @@
         'forum.authentication',
 
         'forum.layout',
-        'forum.forums'
+        'forum.forums',
+        'forum.thread',
     ])
     .run(['$http', function($http){
         $http.defaults.xsrfHeaderName = 'X-CSRFToken';

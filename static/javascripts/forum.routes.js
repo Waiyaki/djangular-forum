@@ -23,6 +23,11 @@
                 controllerAs: 'vm',
                 templateUrl: '/static/templates/forum/forum.html'
             })
+            .when('/threads/:thread_slug', {
+                controller: 'ThreadController',
+                controllerAs: 'vm',
+                templateUrl: '/static/templates/thread/thread.html'
+            })
             .otherwise('/');
         }]);
 })();
