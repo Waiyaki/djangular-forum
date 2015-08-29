@@ -5,7 +5,7 @@
                 <span>Menu</span>
             </md-button>
         {% endif %}
-        <h1 style="margin-left: 10px; " flex>Marioshoni Forum</h1>
+        <h1 style="margin-left: 20px; " flex>Marioshoni Forum</h1>
         {% if user.is_authenticated %}
             <md-button ng-click="vm.navigate('/profile')" hide show-gt-sm>{{ user.username }}</md-button>
             <md-button ng-click="vm.logout()" aria-label="Logout">Logout</md-button>

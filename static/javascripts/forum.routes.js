@@ -19,7 +19,9 @@
                 templateUrl: '/static/templates/layout/index.html'
             })
             .when('/forums/:forum_slug', {
-                template: '<h1>In here</h1>'
+                controller: 'ForumController',
+                controllerAs: 'vm',
+                templateUrl: '/static/templates/forum/forum.html'
             })
             .otherwise('/');
         }]);

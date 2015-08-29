@@ -57,11 +57,11 @@ class Thread(models.Model):
         return self.title
 
     def num_posts(self):
-        return self.post_set.count()
+        return self.posts.count()
 
     def last_post(self):
-        if self.post_set.count():
-            return self.post_set.last()
+        if self.posts:
+            return self.posts.last()
 
     def get_absolute_url(self):
         return reverse('forum:thread', kwargs={'pk': self.pk})

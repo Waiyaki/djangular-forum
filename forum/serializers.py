@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 
 from rest_framework import serializers
 
-from .models import Forum, Thread
+from .models import Forum, Thread, Post
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -41,14 +41,26 @@ class ForumSerializerNested(ForumSerializer):
         fields = nested_fields
 
 
-class ThreadSerializer(serializers.HyperlinkedModelSerializer):
+class PostSerializer(serializers.ModelSerializer):
+    thread = serializers.SlugRelatedField(slug_field='slug', read_only=True)
+    creator = UserSerializer(read_only=True)
+
+    class Meta:
+        model = Post
+        fields = ('title', 'body', 'thread', 'created', 'updated', 'creator')
+        read_only_fields = ('created', 'updated')
+
+
+class ThreadSerializer(serializers.ModelSerializer):
     creator = UserSerializer(read_only=True)
     forum = ForumSerializerNested(read_only=True)
+    last_post = PostSerializer(read_only=True)
 
     class Meta:
         model = Thread
         fields = (
-            'title', 'description', 'slug', 'created', 'forum', 'creator'
+            'title', 'description', 'slug', 'created', 'forum', 'creator',
+            'num_posts', 'last_post'
         )
         read_only_fields = ('slug', 'created', 'forum')
 
