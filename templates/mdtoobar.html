@@ -1,4 +1,4 @@
-<md-toolbar ng-cloak ng-controller="ToolbarController as vm" ng-cloak>
+<md-toolbar ng-cloak ng-controller="ToolbarController as vm" ng-cloak id="main-toolbar">
     <div class="md-toobar-tools" layout="row">
         {% if user.is_authenticated %}
             <md-button ng-click="vm.toggleSidenav('left')" hide-gt-md class="menuBtn" aria-label="Menu">

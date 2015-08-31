@@ -2,8 +2,8 @@
     'use strict';
 
     angular.module('forum.forums.controllers')
-        .controller('ForumController', ['Forum', '$routeParams', '$mdToast', function(
-                Forum, $routeParams, $mdToast){
+        .controller('ForumController', ['Forum', '$routeParams', '$mdToast', '$location', function(
+                Forum, $routeParams, $mdToast, $location){
 
             var vm = this;
             vm.forum = undefined;

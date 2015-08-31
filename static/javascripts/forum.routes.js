@@ -28,6 +28,9 @@
                 controllerAs: 'vm',
                 templateUrl: '/static/templates/thread/thread.html'
             })
+            .when('/404', {
+                templateUrl: '/static/templates/404.html'
+            })
             .otherwise('/');
         }]);
 })();

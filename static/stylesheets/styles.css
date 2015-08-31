@@ -55,3 +55,12 @@ a.item-title-link:hover {
 .text-muted {
     color: dimgray;
 }
+
+#main-toolbar {
+    height: 84px;
+    min-height: 84px;
+}
+
+.not-found h1 {
+    font-size: 26px;
+}

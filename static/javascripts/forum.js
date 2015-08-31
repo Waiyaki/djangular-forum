@@ -6,6 +6,7 @@
 
         'forum.config',
         'forum.routes',
+        'forum.interceptors',
 
         'forum.authentication',
 
@@ -21,4 +22,5 @@
 
     angular.module('forum.routes', ['ngRoute']);
     angular.module('forum.config', []);
+    angular.module('forum.interceptors', []);
 })();
