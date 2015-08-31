@@ -7,34 +7,7 @@
                 </div>
             </md-toolbar>
             <md-card-content>
-                <md-list>
-                    <div ng-repeat="forum in vm.forums">
-                        <md-list-item class="md-3-line" ng-click="vm.navigate(forum.slug)">
-                            <div class="md-list-item-text" layout="column">
-                                <h2 ng-bind="forum.title" class="md-headline item-title item-title-link"></h2>
-                                <h4>{{ forum.description || 'No description yet.' }}</h4>
-                                <div class="md-caption">
-                                    <p>Threads: {{ forum.num_threads }}</p>
-                                    <p>Created: {{ forum.created | date }}</p>
-                                    <p>Created By: {{ forum.creator.username }}</p>
-                                </div>
-                            </div>
-                        </md-list-item>
-                        <div ng-hide="{{ $last }}">
-                            <md-divider></md-divider>
-                        </div>
-                    </div>
-                </md-list>
-                <md-list ng-hide="vm.forums && vm.forums.length">
-                    <div layout="row" layout-sm="column" layout-align="space-around" ng-hide="vm.forums_loaded" class="md-padding">
-                        <md-progress-circular md-mode="indeterminate" class="md-warn"></md-progress-circular>
-                    </div>
-                    <md-list-item class="md-2-line">
-                        <div class="md-list-item-text" layout="column" ng-show="vm.forums_loaded">
-                            <h2 class="md-headline">No forums yet.</h2>
-                        </div>
-                    </md-list-item>
-                </md-list>
+                <forums forums="vm.forums"></forums>
             </md-card-content>
         </md-card>
     </md-content>

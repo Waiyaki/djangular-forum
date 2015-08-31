@@ -19,9 +19,15 @@
     margin-bottom: 5px;
 }
 
-.item-title-link:hover {
+a.item-title-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+a.item-title-link:hover {
     text-decoration: underline;
     cursor: pointer;
+    color: #0082FF;
 }
 
 .content-list {
@@ -39,9 +45,6 @@
     text-decoration: none;
 }
 
-.md-toolbar {
-    height: 50px;
-}
 
 .post-content {
     margin-left: 20px;
