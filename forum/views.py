@@ -131,7 +131,7 @@ class ThreadPostsViewSet(viewsets.ViewSet):
 
     def list(self, request, thread_slug, format=None):
         queryset = self.queryset.filter(
-            thread__slug=thread_slug).order_by('-created')
+            thread__slug=thread_slug).order_by('created')
         serializer = self.serializer_class(queryset, many=True)
         return Response(serializer.data)
 
@@ -157,3 +157,29 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
         if request.user.is_superuser:
             return Response({}, status=status.HTTP_200_OK)
         return Response({}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class PostViewSet(viewsets.ModelViewSet):
+    queryset = Post.objects.all()
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsCreatorOrReadOnly)
+    serializer_class = PostSerializer
+
+    class Meta:
+        model = Post
+
+    def create(self, request, *args, **kwargs):
+        thread_slug = request.data.get('thread_slug', None)
+        title = request.data.get('title', None)
+        body = request.data.get('body', None)
+
+        if not thread_slug and title and body:
+            return Response({
+                'status': 'Bad Request',
+                'message': 'Post could not be created with received data.'
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+        thread = get_object_or_404(Thread, slug=thread_slug)
+        post = Post.objects.create(
+            creator=request.user, title=title, body=body, thread=thread)
+        serializer = self.serializer_class(post)
+        return Response(serializer.data)

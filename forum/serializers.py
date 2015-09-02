@@ -47,8 +47,12 @@ class PostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ('title', 'body', 'thread', 'created', 'updated', 'creator')
-        read_only_fields = ('created', 'updated')
+        fields = ('id', 'title', 'body', 'thread', 'created', 'updated', 'creator')
+        read_only_fields = ('id', 'created', 'updated')
+
+    def get_validation_exclusions(self, *args, **kwargs):
+        exclusions = super(self, PostSerializer).get_validation_exclusions()
+        return exclusions + ['creator', 'thread']
 
 
 class ThreadSerializer(serializers.ModelSerializer):

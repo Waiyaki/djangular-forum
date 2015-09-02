@@ -27,6 +27,7 @@ router.register(r'forums', views.ForumViewSet)
 # router.register(r'posts', views.PostViewSet)
 # router.register(r'comments', views.CommentViewSet)
 router.register(r'users', views.UserViewSet)
+router.register(r'posts', views.PostViewSet)
 
 forum_threads_router = routers.NestedSimpleRouter(router, r'forums', lookup="forum")
 forum_threads_router.register(r'threads', views.ForumThreadsViewSet, base_name="forum-thread")

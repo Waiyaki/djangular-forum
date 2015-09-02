@@ -23,12 +23,12 @@
                     }
                     activate();
 
-                    $rootScope.$on('thread.created', function(event){
+                    $scope.$on('thread.created', function(event){
                         $scope.threads_loaded = false;
                         activate();
                     });
                 },
                 templateUrl: '/static/templates/thread/threads.html'
             }
-        }])
+        }]);
 })();

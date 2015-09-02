@@ -1,0 +1,11 @@
+<div>
+    <h2 ng-bind="post.title" class="md-headline item-title"></h2>
+    <div class="md-caption text-muted" layout="row">
+        <span>Created: {{ post.created | date:'medium' }}</span>
+        <span flex="5" layout-align="space-around center"></span>
+        <span>Created By: {{ post.creator.username }}</span>
+    </div>
+    <div class="post-content">
+        <p ng-bind="post.body"></p>
+    </div>
+</div>

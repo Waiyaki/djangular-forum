@@ -17,6 +17,10 @@
                         $scope.posts_loaded = true;
                         $mdToast.showSimple('Unable to load posts for this thread.');
                     });
+
+                    $scope.$on('post.created', function(event, data){
+                        $scope.posts.push(data.post);
+                    });
                 },
                 templateUrl: '/static/templates/posts/posts.html'
             };

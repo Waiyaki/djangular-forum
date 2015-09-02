@@ -22,4 +22,10 @@
             </md-content>
         </div>
     </md-content>
+
+    <md-button class="md-warn md-fab create-btn" aria-label="Create Post"
+            ng-click="vm.showCreate($event)" ng-show="vm.isAuthenticated">
+        <md-tooltip>Create Post</md-tooltip>
+        +
+    </md-button>
 </div>
