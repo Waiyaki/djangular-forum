@@ -49,6 +49,8 @@
             .when('/403', {
                 templateUrl: '/static/templates/403.html'
             })
-            .otherwise('/');
+            .otherwise({
+                redirectTo: '/404'
+            });
         }]);
 })();
