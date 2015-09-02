@@ -1,0 +1,32 @@
+<md-content layout="row" layout-align="space-around center">
+    <md-card flex="80" flex-gt-md="75" class="input-card">
+        <md-toolbar class="md-warn">
+            <h1 layout-align="center" class="md-toolbar-tools">Create Forum</h1>
+        </md-toolbar>
+        <md-card-content>
+            <form name="forumForm" ng-submit="vm.create()" novalidate>
+                <md-input-container>
+                    <label>Title</label>
+                    <input type="text" ng-model="vm.forum.title" required name="title">
+
+                    <div ng-messages="forumForm.title.$error" ng-if="forumForm.title.$touched">
+                        <div ng-message="required">This field is required</div>
+                    </div>
+                </md-input-container>
+
+                <md-input-container>
+                    <label>Description</label>
+                    <input type="description" ng-model="vm.forum.description" name="description" required ng-minlength="10">
+
+                    <div ng-messages="forumForm.description.$error" ng-if="forumForm.description.$touched">
+                        <div ng-message="required">Kindly give this forum a description.</div>
+                        <div ng-message="minlength">Your description has to be at least 10 characters long.</div>
+                    </div>
+                </md-input-container>
+                <md-button type="submit" class="md-raised md-primary" ng-disabled="forumForm.$invalid" aria-label="Create Forum">
+                    Submit
+                </md-button>
+            </form>
+        </md-card-content>
+    </md-card>
+</md-content>

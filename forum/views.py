@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
 
-from rest_framework.decorators import api_view, detail_route
+from rest_framework.decorators import api_view, detail_route, list_route
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from rest_framework import viewsets, permissions
@@ -151,3 +151,9 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
             return Response({}, status=status.HTTP_200_OK)
         except User.DoesNotExist:
             return Response({}, status=status.HTTP_400_BAD_REQUEST)
+
+    @list_route(methods=['GET'])
+    def is_admin(self, request):
+        if request.user.is_superuser:
+            return Response({}, status=status.HTTP_200_OK)
+        return Response({}, status=status.HTTP_400_BAD_REQUEST)

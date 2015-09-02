@@ -28,8 +28,26 @@
                 controllerAs: 'vm',
                 templateUrl: '/static/templates/thread/thread.html'
             })
+            .when('/create/forum', {
+                controller: 'NewForumController',
+                controllerAs: 'vm',
+                templateUrl: '/static/templates/forum/create-forum.html',
+                resolve: {
+                    auth: ['$q', '$location', 'Authentication',
+                        function($q, $location, Authentication){
+                            return Authentication.isAdmin().then(function(success){},
+                                function(error){
+                                    $location.path('/403').replace();
+                                    return $q.reject(error);
+                                });
+                        }]
+                }
+            })
             .when('/404', {
                 templateUrl: '/static/templates/404.html'
+            })
+            .when('/403', {
+                templateUrl: '/static/templates/403.html'
             })
             .otherwise('/');
         }]);

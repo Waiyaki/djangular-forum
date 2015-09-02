@@ -1,5 +1,5 @@
 <md-list>
-    <div ng-repeat="forum in forums">
+    <div ng-repeat="forum in forums | orderBy:'slug'">
         <md-list-item class="md-3-line">
             <div class="md-list-item-text" layout="column">
                 <h2 class="md-headline item-title">

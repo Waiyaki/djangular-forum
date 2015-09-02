@@ -9,7 +9,7 @@ from django.template.defaultfilters import slugify
 class Forum(models.Model):
     creator = models.ForeignKey(User)
 
-    title = models.CharField(max_length=60)
+    title = models.CharField(max_length=60, unique=True)
     created = models.DateTimeField(default=timezone.now)
     description = models.CharField(max_length=255, blank=True, null=True)
     slug = models.SlugField(unique=True)
@@ -48,7 +48,7 @@ class Thread(models.Model):
     creator = models.ForeignKey(User)
     forum = models.ForeignKey(Forum, related_name='threads')
 
-    title = models.CharField(max_length=60)
+    title = models.CharField(max_length=60, unique=True)
     created = models.DateTimeField(default=timezone.now)
     description = models.CharField(max_length=255, blank=True, null=True)
     slug = models.SlugField(unique=True)

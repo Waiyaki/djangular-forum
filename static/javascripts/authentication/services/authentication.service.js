@@ -7,6 +7,7 @@
             var Authentication = {
                 login: login,
                 logout: logout,
+                isAdmin: isAdmin,
                 register: register,
                 checkValidity: checkValidity,
                 unauthenticate: unauthenticate,
@@ -65,6 +66,22 @@
                 }, function(){
                     // Username doesn't exist, accept it.
                     return true;
+                });
+            }
+
+            function isAdmin() {
+                if(!Authentication.isAuthenticated()){
+                    // if the user is  not authenticated, no need to even query the api.
+                    var error = {
+                        status: 403
+                    }
+                    return $q.reject(error);
+                }
+                return $http.get('/api/v1/users/is_admin/').then(function(success){
+                    return $q.resolve(success);
+                }, function(error){
+                    console.log(error.status);
+                    return $q.reject(error);
                 });
             }
 

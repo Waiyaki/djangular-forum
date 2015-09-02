@@ -5,4 +5,17 @@
     <md-toolbar class="md-tall md-hue-2">
         <span flex></span>
     </md-toolbar>
+    <md-list ng-controller="SidenavController as vm" ng-cloak>
+        <md-divider></md-divider>
+        <md-subheader>Admin Section</md-subheader>
+        <md-divider></md-divider>
+        {% if user.is_superuser %}
+            <md-list-item class="md-2-line" ng-click="vm.navigate('/create/forum')">
+                <div class="md-list-item-text">
+                    <h3>Forums</h3>
+                    <p>Make a new forum</p>
+                </div>
+            </md-list-item>
+        {% endif %}
+    </md-list> 
 </md-sidenav>

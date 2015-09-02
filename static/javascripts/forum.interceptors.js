@@ -10,10 +10,10 @@
                         return $q.resolve();
                     }
                     else if(rejection.status == 403) {
-                        $location.path('/login');
-                        return $q.resolve();
+                        $location.path('/403').replace();
+                        return $q.reject();
                     }
-                    $q.reject(rejection);
+                    return $q.reject(rejection);
                 }
             };
         }]);
