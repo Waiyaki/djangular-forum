@@ -21,7 +21,16 @@
                     username: user.username,
                     password: user.password
                 }).then(function(success){
-                    Authentication.setAuthenticatedAccount(success.data);
+                    // After log in, rest-auth gives back a token key.
+                    var key = success.data;
+
+                    // Ask it for a user representation instead, and cache that.
+                    $http.get('/api/v1/rest-auth/user/').then(function(success){
+                        Authentication.setAuthenticatedAccount(success.data);
+                    }, function(error){
+                        // If you encounter any errors, cache the token key instead.
+                        Authentication.setAuthenticatedAccount(key);
+                    });
                     $window.location.href = '/';
                 }, function(error){
                     var msg;

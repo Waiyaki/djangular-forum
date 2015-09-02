@@ -64,3 +64,15 @@ a.item-title-link:hover {
 .not-found h1 {
     font-size: 26px;
 }
+
+.create-btn {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+}
+
+.create-dialog {
+    max-height: 400px;
+    max-width: 600px;
+    margin: 10px;
+}

@@ -9,6 +9,6 @@
     ]);
 
     angular.module('forum.forums.services', []);
-    angular.module('forum.forums.controllers', []);
+    angular.module('forum.forums.controllers', ['ngMessages']);
     angular.module('forum.forums.directives', []);
 })();

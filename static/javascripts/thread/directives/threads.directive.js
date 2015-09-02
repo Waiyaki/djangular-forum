@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('forum.thread.directives')
-        .directive('threads', ['Forum', '$mdToast', function(Forum, $mdToast){
+        .directive('threads', ['Forum', '$mdToast', '$rootScope', function(Forum, $mdToast, $rootScope){
             return {
                 restrict: 'E',
                 scope: {
@@ -12,12 +12,20 @@
                     $scope.threads_loaded = false; // show loading bar.
 
                     // Get threads in this forum.
-                    Forum.threads($scope.forumSlug).then(function(success){
-                        $scope.threads = success.data;
-                        $scope.threads_loaded = true;
-                    }, function(error){
-                        $scope.threads_loaded = true;
-                        $mdToast.showSimple('Unable to fetch threads for this forum.');
+                    function activate(){
+                        Forum.threads($scope.forumSlug).then(function(success){
+                            $scope.threads = success.data;
+                            $scope.threads_loaded = true;
+                        }, function(error){
+                            $scope.threads_loaded = true;
+                            $mdToast.showSimple('Unable to fetch threads for this forum.');
+                        });
+                    }
+                    activate();
+
+                    $rootScope.$on('thread.created', function(event){
+                        $scope.threads_loaded = false;
+                        activate();
                     });
                 },
                 templateUrl: '/static/templates/thread/threads.html'

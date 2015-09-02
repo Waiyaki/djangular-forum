@@ -1,0 +1,40 @@
+<md-dialog aria-label="New Thread" flex class="create-dialog">
+    <form name="newThread" novalidate ng-submit="submit(thread)">
+        <md-toolbar flex>
+            <div class="md-toolbar-tools">
+                <h2>Create Thread</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()" aria-label="Cancel">
+                    <span>CLOSE</span>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content>
+            <md-input-container>
+                <label>Title</label>
+                <input type="text" ng-model="thread.title" required name="title">
+
+                <div ng-messages="newThread.title.$error" ng-if="newThread.title.$touched">
+                    <div ng-message="required">Thread title is required.</div>
+                </div>
+            </md-input-container>
+
+            <md-input-container>
+                <label>Description</label>
+                <input type="text" ng-model="thread.description" required name="description" ng-minlength="10">
+
+                <div ng-messages="newThread.description.$error" ng-if="newThread.description.$touched">
+                    <div ng-message="required">Kindly give your thread a description.</div>
+                    <div ng-message="minlength">The description has to be at least 10 characters long.</div>
+                </div>
+            </md-input-container>
+        </md-dialog-content>
+
+        <div layout="row" class="md-actions">
+            <md-button class="md-primary md-raised" ng-click="cancel()" aria-label="Cancel">Cancel</md-button>
+            <span flex></span>
+            <md-button class="md-primary md-raised" type="submit" aria-label="Submit" ng-disabled="newThread.$invalid">Create</md-button>
+        </div>
+    </form>
+</md-dialog>
