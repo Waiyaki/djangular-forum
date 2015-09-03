@@ -7,9 +7,10 @@ from rest_framework.reverse import reverse
 from rest_framework import viewsets, permissions
 from rest_framework import generics, status
 
-from .models import Forum, Thread, Post
+from .models import Forum, Thread, Post, Comment
 from .serializers import (
-    ForumSerializer, ThreadSerializer, UserSerializer, PostSerializer
+    ForumSerializer, ThreadSerializer, UserSerializer, PostSerializer,
+    CommentSerializer
 )
 from .permissions import IsCreatorOrReadOnly, IsAdminUserOrReadOnly
 
@@ -182,4 +183,30 @@ class PostViewSet(viewsets.ModelViewSet):
         post = Post.objects.create(
             creator=request.user, title=title, body=body, thread=thread)
         serializer = self.serializer_class(post)
+        return Response(serializer.data)
+
+
+class CommentViewSet(viewsets.ModelViewSet):
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsCreatorOrReadOnly)
+    serializer_class = CommentSerializer
+    queryset = Comment.objects.all()
+
+    class Meta:
+        model = Post
+
+    def create(self, request, *args, **kwargs):
+        # if not request.user:
+        #     return Response({}, status=status.HTTP_403_FORBIDDEN)
+
+        post_pk = request.data.get('post_pk', None)
+        body = request.data.get('body', None)
+
+        if not body and post_pk:
+            return Response({
+                'status': 'Bad Request',
+                'message': 'Comment could not be created with received data.'
+            }, status=status.HTTP_400_BAD_REQUEST)
+        post = get_object_or_404(Post, pk=post_pk)
+        comment = Comment.objects.create(creator=request.user, post=post, body=body)
+        serializer = CommentSerializer(comment)
         return Response(serializer.data)

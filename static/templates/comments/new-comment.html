@@ -1,0 +1,18 @@
+<span class="post-reply" ng-click="showComment()">Reply</span>
+<div>
+    <md-content class="create-comment hidden" layout-margin>
+        <form name="commentForm" novalidate ng-submit="submit(comment)" class="md-padding">
+            <md-input-container>
+                <label>Comment</label>
+                <textarea ng-model="comment.body" name="body" required md-maxlength="1000" maxlength="1000" minlength="3" rows="3"></textarea>
+
+                <div ng-messages="commentForm.body.$error" ng-if="commentForm.body.$touched">
+                    <div ng-message="required">Comment content is required.</div>
+                    <div ng-message="maxlength">Content should not exceed 1000 characters.</div>
+                    <div ng-message="minlength">Not long enough</div>
+                </div>
+            </md-input-container>
+            <md-button aria-label="Submit" type="submit" ng-disabled="commentForm.$invalid" class="md-warn">Submit</md-button>
+        </form>
+    </md-content>
+</div>

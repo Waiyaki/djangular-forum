@@ -29,7 +29,9 @@
                         $scope.hide = function(){
                             $mdDialog.hide();
                         }
+
                         $scope.post = scope.post;
+                        $scope.isAuthenticated = scope.isAuthenticated;
                     }
                 },
                 templateUrl: '/static/templates/posts/post.html'

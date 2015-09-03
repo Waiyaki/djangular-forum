@@ -82,11 +82,6 @@ a.item-title-link:hover {
     max-width: 800px;
 }
 
-.comment-card {
-    border: 1px solid lightgray;
-    margin-left: 30px;
-}
-
 .hidden {
     display: none;
 }
@@ -100,6 +95,11 @@ a.item-title-link:hover {
 .post-reply {
     color: cornflowerblue;
 }
-.post-title:focus {
+
+.post-title:focus, .post-reply:focus {
     outline: none;
+}
+
+.create-comment {
+    border: 2px solid lightgray;
 }

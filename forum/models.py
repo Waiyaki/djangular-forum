@@ -92,7 +92,7 @@ class Comment(models.Model):
     creator = models.ForeignKey(User)
     post = models.ForeignKey(Post, related_name='comments')
 
-    body = models.TextField(max_length=10000)
+    body = models.TextField(max_length=1000)
     created = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
