@@ -69,12 +69,18 @@
             }
 
             function checkValidity(username){
-                return $http.get('/api/v1/users/' + username + '/check/').then(function(){
+                return $http.get('/api/v1/users/' + username + '/check/').then(function(success){
+                    // Have the api serve up 204 if the username is valid to 
+                    // prevent the browser from logging too many 4** errors
+                    // to the console.
+                    if(success.status == 204){
+                        return true;
+                    }
                     // Username exists, reject this username
                     return $q.reject('exists');
-                }, function(){
-                    // Username doesn't exist, accept it.
-                    return true;
+                }, function(error){
+                    // No idea why the api threw an error, so reject it.
+                    return $q.reject(error);
                 });
             }
 

@@ -1,30 +1,32 @@
-<md-list class="content-list">
-    <div ng-repeat="thread in threads" ng-if="threads">
-        <md-list-item class="md-3-line">
-            <div class="md-list-item-text" layout="column">
-                <h2 class="md-headline item-title">
-                    <a href="/threads/{{thread.slug}}/" class="item-title-link">{{thread.title}}</a>
-                </h2>
-                <h4>{{ thread.description || 'No description yet.' }}</h4>
-                <div class="md-caption">
-                    <p>Posts: {{ thread.num_posts }}</p>
-                    <p>Created: {{ thread.created | date }}</p>
-                    <p>Created By: {{ thread.creator.username }}</p>
+<div class="content-list">
+    <md-list>
+        <div ng-repeat="thread in threads | orderBy:'slug'" ng-if="threads">
+            <md-list-item class="md-3-line">
+                <div class="md-list-item-text" layout="column">
+                    <h2 class="md-headline item-title">
+                        <a href="/threads/{{thread.slug}}/" class="item-title-link">{{thread.title}}</a>
+                    </h2>
+                    <h4>{{ thread.description || 'No description yet.' }}</h4>
+                    <div class="md-caption">
+                        <p>Posts: {{ thread.num_posts }}</p>
+                        <p>Created: {{ thread.created | date }}</p>
+                        <p>Created By: {{ thread.creator.username }}</p>
+                    </div>
                 </div>
+            </md-list-item>
+            <div ng-hide="{{ $last }}">
+                <md-divider></md-divider>
+            </div>
+        </div>
+    </md-list>
+    <md-list ng-hide="threads && threads.length">
+        <div layout="row" layout-sm="column" layout-align="space-around" ng-hide="threads_loaded" class="md-padding">
+            <md-progress-circular md-mode="indeterminate" class="md-accent"></md-progress-circular>
+        </div>
+        <md-list-item class="md-2-line">
+            <div class="md-list-item-text" layout="column" ng-show="threads_loaded">
+                <h2 class="md-headline">No threads in this forum yet.</h2>
             </div>
         </md-list-item>
-        <div ng-hide="{{ $last }}">
-            <md-divider></md-divider>
-        </div>
-    </div>
-</md-list>
-<md-list ng-hide="threads && threads.length">
-    <div layout="row" layout-sm="column" layout-align="space-around" ng-hide="threads_loaded" class="md-padding">
-        <md-progress-circular md-mode="indeterminate" class="md-accent"></md-progress-circular>
-    </div>
-    <md-list-item class="md-2-line">
-        <div class="md-list-item-text" layout="column" ng-show="threads_loaded">
-            <h2 class="md-headline">No threads in this forum yet.</h2>
-        </div>
-    </md-list-item>
-</md-list>
+    </md-list>
+</div>

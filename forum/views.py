@@ -151,7 +151,7 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
             User.objects.get(username=username)
             return Response({}, status=status.HTTP_200_OK)
         except User.DoesNotExist:
-            return Response({}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({}, status=status.HTTP_204_NO_CONTENT)
 
     @list_route(methods=['GET'])
     def is_admin(self, request):
