@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 
 from rest_framework import serializers
 
-from .models import Forum, Thread, Post
+from .models import Forum, Thread, Post, Comment
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -41,13 +41,31 @@ class ForumSerializerNested(ForumSerializer):
         fields = nested_fields
 
 
+class CommentSerializer(serializers.ModelSerializer):
+    creator = UserSerializer(read_only=True)
+    post = serializers.PrimaryKeyRelatedField(read_only=True)
+
+    class Meta:
+        model = Comment
+        fields = ('id', 'body', 'created', 'creator', 'post')
+        read_only_fields = ('id', 'created')
+
+    def get_validation_exclusions(self, *args, **kwargs):
+        exclusions = super(CommentSerializer, self).get_validation_exclusions()
+        return exclusions + ['creator', 'post']
+
+
 class PostSerializer(serializers.ModelSerializer):
     thread = serializers.SlugRelatedField(slug_field='slug', read_only=True)
     creator = UserSerializer(read_only=True)
+    comments = CommentSerializer(many=True, read_only=True)
 
     class Meta:
         model = Post
-        fields = ('id', 'title', 'body', 'thread', 'created', 'updated', 'creator')
+        fields = (
+            'id', 'title', 'body', 'thread', 'created', 'updated', 'creator',
+            'num_comments', 'comments'
+        )
         read_only_fields = ('id', 'created', 'updated')
 
     def get_validation_exclusions(self, *args, **kwargs):

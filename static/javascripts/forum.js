@@ -14,6 +14,7 @@
         'forum.forums',
         'forum.thread',
         'forum.posts',
+        'forum.comments',
     ])
     .run(['$http', function($http){
         $http.defaults.xsrfHeaderName = 'X-CSRFToken';

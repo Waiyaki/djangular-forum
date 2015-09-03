@@ -84,17 +84,19 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
+    def num_comments(self):
+        return self.comments.count()
+
 
 class Comment(models.Model):
     creator = models.ForeignKey(User)
     post = models.ForeignKey(Post, related_name='comments')
 
-    title = models.CharField(max_length=60)
     body = models.TextField(max_length=10000)
     created = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return self.title
+        return self.body[:20] + '...'
 
 
 class UserProfile(models.Model):

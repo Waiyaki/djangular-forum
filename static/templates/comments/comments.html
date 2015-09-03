@@ -1,0 +1,11 @@
+<md-content>
+    <div class="comment md-padding" ng-repeat="comment in comments">
+        <p ng-bind="comment.body" class="post-content"></p>
+        <div class="md-caption text-muted" layout="row">
+            <span>- By: {{ comment.creator.username }}</span>
+            <span flex="5" layout-align="space-around center"></span>
+            <span>- On: {{ comment.created | date:'medium' }}</span>
+        </div>
+        <md-divider ng-hide="{{ $last }}"></md-divider>
+    </div>
+</md-content>

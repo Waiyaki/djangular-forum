@@ -1,5 +1,7 @@
 <div>
-    <h2 ng-bind="post.title" class="md-headline item-title"></h2>
+    <h2 class="md-headline item-title">
+        <span class="post-title" ng-click="showPost()" ng-bind="post.title"></span>
+    </h2>
     <div class="md-caption text-muted" layout="row">
         <span>Created: {{ post.created | date:'medium' }}</span>
         <span flex="5" layout-align="space-around center"></span>
@@ -7,5 +9,11 @@
     </div>
     <div class="post-content">
         <p ng-bind="post.body"></p>
+    </div>
+    <div>
+        <span class="text-muted md-caption">
+            {{ post.num_comments }} {{ post.num_comments == 1 ? 'reply' : 'replies' }}
+            <span class="post-reply">Reply</span>
+        </span>
     </div>
 </div>

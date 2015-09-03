@@ -1,0 +1,47 @@
+<md-dialog aria-label="New Post" flex>
+    <form name="newPost" novalidate ng-submit="submit(post)">
+        <md-toolbar flex class="md-warn">
+            <div class="md-toolbar-tools">
+                <h2 ng-bind="post.title"></h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon md-svg-src="/static/img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content class="post-dialog-content">
+            <div>
+                <p ng-bind="post.body"></p>
+                <div class="md-caption text-muted" layout="row" layout-margin>
+                    <span>Created: {{ post.created | date:'medium' }}</span>
+                    <span flex="5" layout-align="space-around center"></span>
+                    <span>Created By: {{ post.creator.username }}</span>
+                    <span flex></span>
+                    <span>{{ post.num_comments }} {{ post.num_comments == 1 ? 'reply' : 'replies' }}</span>
+                </div>
+                <span class="post-reply text-muted" style="margin: 5px;">Reply</span>
+            </div>
+            <md-content class="content-list" style="max-height: 600px;">
+                <md-toolbar class="md-accent">
+                    <div class="md-toolbar-tools">
+                        <h1 class="md-flex">Replies</h1>
+                    </div>
+                </md-toolbar>
+
+                <div ng-show="post.comments && post.comments.length">
+                    <comments comments="post.comments"></comments>
+                </div>
+
+                <div ng-hide="post.comments && post.comments.length">
+                    <h3 class="md-headline md-padding">No replies to this post.</h3>
+                </div>
+            </md-content>
+        </md-dialog-content>
+
+        <div layout="row" class="md-actions">
+            <span flex></span>
+            <md-button ng-click="cancel()" aria-label="Cancel">Close</md-button>
+        </div>
+    </form>
+</md-dialog>

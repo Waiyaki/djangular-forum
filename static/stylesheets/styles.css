@@ -49,7 +49,7 @@ a.item-title-link:hover {
 .post-content {
     margin-left: 20px;
     padding-left: 10px;
-    border-left: 1px solid lightgray;
+    border-left: 3px solid lightgray;
 }
 
 .text-muted {
@@ -73,6 +73,33 @@ a.item-title-link:hover {
 
 .create-dialog {
     max-height: 400px;
-    max-width: 600px;
+    max-width: 80%;
     margin: 10px;
+}
+
+.post-dialog-content {
+    max-height: 810px;
+    max-width: 800px;
+}
+
+.comment-card {
+    border: 1px solid lightgray;
+    margin-left: 30px;
+}
+
+.hidden {
+    display: none;
+}
+
+.post-reply:hover, .post-title:hover {
+    text-decoration: underline;
+    color: #0082FF;
+    cursor: pointer;
+}
+
+.post-reply {
+    color: cornflowerblue;
+}
+.post-title:focus {
+    outline: none;
 }
