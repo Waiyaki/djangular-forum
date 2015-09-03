@@ -108,7 +108,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
-COMPRESS_ENABLED = os.environ.get('COMPRESS_ENABLED', True)
+COMPRESS_ENABLED = os.environ.get('COMPRESS_ENABLED', False)
 
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 
@@ -130,7 +130,7 @@ STATIC_ROOT = 'staticfiles'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
-STATICFILES_FINDERS = ('compressor.finders.CompressorFinder',)
+# STATICFILES_FINDERS = ('compressor.finders.CompressorFinder',)
 
 
 try:
