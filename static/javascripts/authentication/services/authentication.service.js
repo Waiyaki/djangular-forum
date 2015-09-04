@@ -57,7 +57,6 @@
                     }
                     Authentication.login(loginUser);
                 }, function(error){
-                    console.log(error.data);
                     var msg;
                     if(error.data.message){
                         msg = "Error logging in: " + error.data.message;
@@ -95,7 +94,6 @@
                 return $http.get('/api/v1/users/is_admin/').then(function(success){
                     return $q.resolve(success);
                 }, function(error){
-                    console.log(error.status);
                     return $q.reject(error);
                 });
             }

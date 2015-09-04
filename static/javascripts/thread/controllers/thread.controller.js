@@ -28,7 +28,6 @@
                 post.thread_slug = vm.threadSlug;
 
                 Posts.create(post).then(function(success){
-                    console.log('In thread controller', success.data);
                     $rootScope.$broadcast('post.created', {
                         post: success.data
                     });
